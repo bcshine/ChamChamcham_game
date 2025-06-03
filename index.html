@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>참참참 게임</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 타이틀 화면 -->
+    <div id="titleScreen" class="screen">
+        <div class="title-container">
+            <h1 class="game-title">참참참 게임</h1>
+            <div class="cat-character">😸</div>
+            
+            <div class="challenge-section">
+                <h2 class="challenge-title">참참참 게임에 도전하세요.</h2>
+                <p class="reward-text">플레이어가 승리하신다면, <strong>음료수 한잔 무료!!</strong></p>
+            </div>
+            
+            <div class="rules-section">
+                <h3 class="rules-title">게임원칙</h3>
+                <div class="rules-content">
+                    <p>참참참 마무리 될때,</p>
+                    <p>고양이 얼굴이 <strong>오른쪽</strong>일지, <strong>왼쪽</strong>일지 맞추세요.</p>
+                    <br>
+                    <p class="rule-result">같은 방향이면 <span class="win-text">플레이어가 승리</span>,</p>
+                    <p class="rule-result">다른 방향이면 <span class="lose-text">플레이어가 패배</span>.</p>
+                    <br>
+                    <p class="warning-text">한사람에게 단 한번의 기회뿐.</p>
+                </div>
+            </div>
+            
+            <button id="startBtn" class="btn primary large challenge-btn">도전</button>
+        </div>
+    </div>
+
+    <!-- 게임 화면 -->
+    <div id="gameScreen" class="screen hidden">
+        <div class="game-container">
+            <div id="statusText" class="status-text">준비!</div>
+            
+            <div class="cat-container">
+                <div id="catCharacter" class="cat-character large">😸</div>
+            </div>
+
+            <!-- 참참참 버튼 섹션 -->
+            <div id="chamSection" class="cham-section">
+                <button id="chamBtn" class="btn primary large">참참참! 시작</button>
+                <p class="instruction-text">버튼을 눌러 게임을 시작하세요</p>
+            </div>
+
+            <!-- 방향 선택 버튼들 (항상 표시) -->
+            <div id="directionSection" class="direction-section">
+                <p class="instruction-text">방향을 선택하세요!</p>
+                <div class="direction-buttons">
+                    <button id="leftBtn" class="btn secondary direction-btn">← 왼쪽</button>
+                    <button id="rightBtn" class="btn secondary direction-btn">→ 오른쪽</button>
+                </div>
+                
+                <!-- 타이머 바 -->
+                <div id="timerBar" class="timer-bar hidden">
+                    <div id="timerFill" class="timer-fill"></div>
+                </div>
+            </div>
+
+            <!-- 결과 표시 -->
+            <div id="resultSection" class="result-section hidden">
+                <div id="resultText" class="result-text"></div>
+                <div id="buttonResult" class="button-result"></div>
+            </div>
+        </div>
+        
+        <!-- 참참참 텍스트 오버레이 -->
+        <div id="chamTextDisplay" class="cham-text hidden">참</div>
+        
+        <!-- 결과 팝업 오버레이 -->
+        <div id="resultPopup" class="result-popup hidden">플레이어 승리</div>
+    </div>
+
+    <!-- 게임 오버 화면 -->
+    <div id="gameOverScreen" class="screen hidden">
+        <div class="gameover-container">
+            <h2>게임 종료</h2>
+            <div class="cat-character">😸</div>
+            <div id="finalResult" class="final-result"></div>
+            <div class="button-group">
+                <button id="retryBtn" class="btn primary">다시 하기</button>
+                <button id="titleBtn" class="btn secondary">처음으로</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
