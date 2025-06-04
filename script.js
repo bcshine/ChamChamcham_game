@@ -9,6 +9,10 @@ let timerInterval = null;
 let chamStarted = false;
 let buttonEnabled = false; // 방향 버튼 활성화 여부
 
+// 사운드 관리
+let audioContext = null;
+let soundEnabled = false;
+
 // DOM 요소들
 const titleScreen = document.getElementById('titleScreen');
 const gameScreen = document.getElementById('gameScreen');
@@ -47,53 +51,70 @@ const catImages = {
 
 // 사운드 효과 (간단한 Beep 사운드 구현)
 function playSound(type) {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    let frequency;
-    let duration = 200;
-    
-    switch(type) {
-        case 'cham':
-            frequency = 800;
-            duration = 300;
-            break;
-        case 'button':
-            frequency = 600;
-            duration = 150;
-            break;
-        case 'win':
-            frequency = 1000;
-            duration = 500;
-            break;
-        case 'lose':
-            frequency = 400;
-            duration = 500;
-            break;
-        case 'timeout':
-            frequency = 300;
-            duration = 300;
-            break;
-        case 'click':
-            frequency = 700;
-            duration = 200;
-            break;
-        default:
-            frequency = 500;
+    // AudioContext가 초기화되지 않았거나 비활성화된 경우 초기화 시도
+    if (!audioContext || !soundEnabled) {
+        initAudioContext();
     }
     
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+    // 여전히 AudioContext가 없으면 사운드 재생 포기
+    if (!audioContext || !soundEnabled) {
+        console.warn('사운드 재생 불가: AudioContext 없음');
+        return;
+    }
     
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.value = frequency;
-    oscillator.type = 'sine';
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + duration / 1000);
+    try {
+        let frequency;
+        let duration = 200;
+        
+        switch(type) {
+            case 'cham':
+                frequency = 800;
+                duration = 300;
+                break;
+            case 'button':
+                frequency = 600;
+                duration = 150;
+                break;
+            case 'win':
+                frequency = 1000;
+                duration = 500;
+                break;
+            case 'lose':
+                frequency = 400;
+                duration = 500;
+                break;
+            case 'timeout':
+                frequency = 300;
+                duration = 300;
+                break;
+            case 'click':
+                frequency = 700;
+                duration = 200;
+                break;
+            default:
+                frequency = 500;
+        }
+        
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + duration / 1000);
+        
+        console.log(`사운드 재생: ${type} (${frequency}Hz, ${duration}ms)`);
+        
+    } catch (error) {
+        console.warn('사운드 재생 중 오류:', error);
+    }
 }
 
 // 참 텍스트 표시 함수 (0.5초, 애니메이션 포함)
@@ -231,7 +252,7 @@ function startChamSequence() {
     // 첫 번째 "참!"
     setTimeout(() => {
         console.log('첫 번째 참'); // 디버깅용
-        playSound('cham');
+        setTimeout(() => playSound('cham'), 50); // 약간의 지연 추가
         showChamText('참');
         catCharacter.style.transform = 'translateY(-10px)';
         setTimeout(() => {
@@ -242,7 +263,7 @@ function startChamSequence() {
     // 두 번째 "참!"
     setTimeout(() => {
         console.log('두 번째 참'); // 디버깅용
-        playSound('cham');
+        setTimeout(() => playSound('cham'), 50); // 약간의 지연 추가
         showChamText('참');
         catCharacter.style.transform = 'scale(1.1)';
         setTimeout(() => {
@@ -253,7 +274,7 @@ function startChamSequence() {
     // 세 번째 "참!" - 고양이 방향 결정 및 최종 입력 확정 시작
     setTimeout(() => {
         console.log('세 번째 참!'); // 디버깅용
-        playSound('cham');
+        setTimeout(() => playSound('cham'), 50); // 약간의 지연 추가
         showChamText('참!'); // 느낌표 추가
         
         // 고양이 방향 랜덤 결정
@@ -402,7 +423,7 @@ function showInstantResult() {
         showResultPopup(false, '플레이어 패배');
         statusText.textContent = '안타까워요';
         
-        setCatExpression('smug'); // 득의양양한 표정
+        setCatExpression('sad'); // 슬픈 표정으로 변경
         playSound('lose');
         console.log('❌ 패배! 방향이 다름');
     }
@@ -487,8 +508,8 @@ function showResult() {
             resultText.textContent = '플레이어 패배! 😅';
             resultText.className = 'result-text lose';
             if (statusText.textContent !== '플레이어 패배') {
-                statusText.textContent = '내가 이겼다냥!';
-                setCatExpression('smug');
+                statusText.textContent = '안타까워요!';
+                setCatExpression('sad'); // 슬픈 표정으로 변경
                 playSound('lose');
             }
             break;
@@ -555,6 +576,10 @@ console.log('DOM 요소 확인:', {
 
 startBtn.addEventListener('click', () => {
     console.log('도전 버튼 클릭됨!');
+    
+    // 첫 번째 사용자 인터랙션에서 AudioContext 초기화
+    initAudioContext();
+    
     playSound('button');
     showScreen('game');
     initGame();
@@ -603,4 +628,25 @@ document.addEventListener('keydown', (e) => {
 // 게임 초기화
 document.addEventListener('DOMContentLoaded', () => {
     showScreen('title');
-}); 
+});
+
+// 오디오 컨텍스트 초기화 함수
+function initAudioContext() {
+    try {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            soundEnabled = true;
+            console.log('AudioContext 초기화 성공');
+        }
+        
+        // AudioContext가 suspended 상태일 때 resume
+        if (audioContext.state === 'suspended') {
+            audioContext.resume().then(() => {
+                console.log('AudioContext resumed');
+            });
+        }
+    } catch (error) {
+        console.warn('AudioContext 초기화 실패:', error);
+        soundEnabled = false;
+    }
+} 

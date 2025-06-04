@@ -499,199 +499,228 @@ body {
 @media (max-width: 768px) {
     body {
         align-items: flex-start;
-        padding: 10px 0;
+        padding: 5px 0;
     }
     
     .screen {
-        padding: 10px;
+        padding: 5px;
         align-items: center;
         min-height: auto;
     }
     
     .title-container {
-        margin: 10px auto;
-        padding: 20px 20px;
+        margin: 5px auto;
+        padding: 15px 15px;
         max-width: 95vw;
-        width: calc(100% - 20px);
+        width: calc(100% - 10px);
         box-sizing: border-box;
     }
     
     .game-title {
-        font-size: 2.2rem;
-        margin-bottom: 12px;
+        font-size: 1.8rem;
+        margin-bottom: 8px;
         letter-spacing: -0.5px;
     }
     
     .cat-character {
-        font-size: 2.5rem;
-        margin: 15px 0;
+        margin: 10px 0;
+    }
+    
+    .cat-image {
+        height: 6rem; /* 모바일에서 더 작게 */
     }
     
     .challenge-section {
-        margin: 20px 0;
-        padding: 16px;
+        margin: 15px 0;
+        padding: 12px;
     }
     
     .challenge-title {
-        font-size: 1.3rem;
-        margin-bottom: 10px;
+        font-size: 1.2rem;
+        margin-bottom: 8px;
     }
     
     .reward-text {
-        font-size: 1rem;
-        line-height: 1.4;
+        font-size: 0.9rem;
+        line-height: 1.3;
     }
     
     .reward-text strong {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .rules-section {
-        margin: 20px 0;
-        padding: 16px;
+        margin: 15px 0;
+        padding: 12px;
     }
     
     .rules-title {
-        font-size: 1.2rem;
-        margin-bottom: 12px;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
     }
     
     .rules-content {
-        font-size: 0.9rem;
-        line-height: 1.4;
+        font-size: 0.85rem;
+        line-height: 1.3;
     }
     
     .rule-result {
-        font-size: 1rem !important;
+        font-size: 0.9rem !important;
     }
     
     .warning-text {
-        font-size: 1rem !important;
-        padding: 10px;
+        font-size: 0.9rem !important;
+        padding: 8px;
     }
     
     .warning-text::before {
-        font-size: 1rem;
+        font-size: 0.9rem;
         margin-right: 6px;
     }
     
     .challenge-btn {
-        font-size: 1.5rem !important;
-        padding: 16px 32px !important;
-        margin-top: 20px;
+        font-size: 1.3rem !important;
+        padding: 14px 28px !important;
+        margin-top: 15px;
         width: auto;
-        min-width: 200px;
+        min-width: 180px;
     }
     
     /* 게임 화면 모바일 최적화 */
-    .cat-character.large {
-        font-size: 20vh;
+    .cat-character.large .cat-image {
+        height: 25vh; /* 게임 화면에서도 작게 */
     }
     
     .cham-text {
-        font-size: 10vh;
+        font-size: 8vh;
     }
     
     .game-container {
-        margin: 10px;
-        padding: 20px 15px;
+        margin: 5px;
+        padding: 15px 10px;
         min-width: auto;
-        width: calc(100% - 20px);
+        width: calc(100% - 10px);
         box-sizing: border-box;
     }
     
     .cat-container {
-        min-height: 20vh;
-        margin: 20px 0;
+        min-height: 15vh;
+        margin: 15px 0;
     }
     
     .btn {
-        padding: 12px 20px;
-        font-size: 0.9rem;
+        padding: 10px 16px;
+        font-size: 0.85rem;
     }
     
     .btn.large {
-        padding: 14px 25px;
-        font-size: 1.1rem;
+        padding: 12px 20px;
+        font-size: 1rem;
     }
     
     .direction-buttons {
-        gap: 15px;
+        gap: 12px;
         flex-wrap: wrap;
+        margin: 15px 0;
     }
     
     .direction-btn {
-        min-width: 90px;
+        min-width: 80px;
         flex: 1;
     }
     
     .button-group {
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 12px;
     }
     
     .result-popup {
-        font-size: 12vh;
-        padding: 12px;
+        font-size: 10vh;
+        padding: 10px;
         max-width: 90vw;
         word-break: keep-all;
     }
     
     .status-text {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
+        font-size: 1.3rem;
+        margin-bottom: 15px;
     }
     
     .gameover-container {
-        margin: 10px;
-        padding: 40px 20px;
+        margin: 5px;
+        padding: 20px 15px;
         max-width: 95vw;
-        width: calc(100% - 20px);
+        width: calc(100% - 10px);
         box-sizing: border-box;
     }
     
     .gameover-container h2 {
-        font-size: 2rem;
-        margin-bottom: 20px;
+        font-size: 1.6rem;
+        margin-bottom: 15px;
     }
     
     .final-result {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        margin: 15px 0;
+    }
+    
+    .instruction-text {
+        font-size: 0.9rem;
+        margin: 10px 0;
+    }
+    
+    .cham-section, .direction-section {
         margin: 20px 0;
     }
 }
 
 @media (max-height: 700px) {
     .title-container {
-        padding: 15px 20px;
+        padding: 10px 15px;
     }
     
     .challenge-section,
     .rules-section {
-        margin: 15px 0;
-        padding: 12px;
+        margin: 10px 0;
+        padding: 10px;
     }
     
     .challenge-btn {
-        margin-top: 15px;
-        padding: 14px 28px !important;
-        font-size: 1.3rem !important;
+        margin-top: 10px;
+        padding: 12px 24px !important;
+        font-size: 1.2rem !important;
     }
     
-    .cat-character {
-        font-size: 2rem;
+    .cat-image {
+        height: 5rem;
+    }
+    
+    .cat-character.large .cat-image {
+        height: 20vh;
+    }
+    
+    .game-container {
+        padding: 10px 8px;
+    }
+    
+    .cat-container {
+        min-height: 12vh;
         margin: 10px 0;
+    }
+    
+    .cham-section, .direction-section {
+        margin: 15px 0;
     }
 }
 
 @media (max-width: 480px) {
     .title-container {
-        padding: 15px 15px;
+        padding: 10px 12px;
     }
     
     .game-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
     
     .challenge-title {
@@ -699,20 +728,90 @@ body {
     }
     
     .rules-title {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .reward-text {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
     
     .rules-content {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
     
     .challenge-btn {
-        font-size: 1.3rem !important;
-        padding: 14px 24px !important;
-        min-width: 180px;
+        font-size: 1.2rem !important;
+        padding: 12px 20px !important;
+        min-width: 160px;
+    }
+    
+    .cat-image {
+        height: 5rem;
+    }
+    
+    .cat-character.large .cat-image {
+        height: 22vh;
+    }
+}
+
+/* 매우 작은 화면 높이 최적화 */
+@media (max-height: 600px) {
+    .title-container {
+        padding: 8px 12px;
+        margin: 2px auto;
+    }
+    
+    .challenge-section,
+    .rules-section {
+        margin: 8px 0;
+        padding: 8px;
+    }
+    
+    .game-title {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+    }
+    
+    .cat-image {
+        height: 4rem;
+    }
+    
+    .cat-character.large .cat-image {
+        height: 18vh;
+    }
+    
+    .challenge-btn {
+        margin-top: 8px;
+        padding: 10px 20px !important;
+        font-size: 1.1rem !important;
+    }
+    
+    .game-container {
+        padding: 8px 6px;
+        margin: 2px;
+    }
+    
+    .cat-container {
+        min-height: 10vh;
+        margin: 8px 0;
+    }
+    
+    .status-text {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    
+    .cham-section, .direction-section {
+        margin: 10px 0;
+    }
+    
+    .btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .btn.large {
+        padding: 10px 16px;
+        font-size: 0.9rem;
     }
 } 
