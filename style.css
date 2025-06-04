@@ -109,6 +109,7 @@ body {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #666;
+    text-align: center;
 }
 
 .rules-content p {
@@ -194,7 +195,7 @@ body {
 /* 고양이 이미지 스타일 */
 .cat-image {
     width: auto;
-    height: 8rem; /* 타이틀 화면 기본 크기 */
+    height: 17rem; /* 타이틀 화면 기본 크기 */
     object-fit: contain;
     transition: all 0.5s ease;
 }
@@ -244,7 +245,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 20vh;
+    font-size: 8vh;
     font-weight: bold;
     text-shadow: 6px 6px 12px rgba(0, 0, 0, 0.5);
     z-index: 2000;
@@ -482,10 +483,11 @@ body {
 }
 
 .final-result {
-    font-size: 1.5rem;
+    font-size: 3rem;
     color: #666;
     margin: 30px 0;
     font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .button-group {
@@ -661,8 +663,9 @@ body {
     }
     
     .final-result {
-        font-size: 1rem;
+        font-size: 2rem;
         margin: 15px 0;
+        line-height: 1.2;
     }
     
     .instruction-text {
@@ -752,6 +755,11 @@ body {
     .cat-character.large .cat-image {
         height: 22vh;
     }
+    
+    .final-result {
+        font-size: 1.6rem;
+        margin: 12px 0;
+    }
 }
 
 /* 매우 작은 화면 높이 최적화 */
@@ -813,5 +821,10 @@ body {
     .btn.large {
         padding: 10px 16px;
         font-size: 0.9rem;
+    }
+    
+    .final-result {
+        font-size: 1.4rem;
+        margin: 10px 0;
     }
 } 
