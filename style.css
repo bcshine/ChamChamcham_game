@@ -176,33 +176,42 @@ body {
 }
 
 .cat-character {
-    font-size: 4rem;
     margin: 20px 0;
     animation: bounce 2s infinite;
     position: relative;
     transition: all 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cat-character.large {
-    font-size: 30vh; /* 화면 높이의 30% */
     transition: all 0.5s ease;
     line-height: 1;
     animation: none; /* bounce 애니메이션 제거 */
 }
 
-/* 고양이 얼굴 돌리기 - 모든 경우에 적용되도록 */
+/* 고양이 이미지 스타일 */
+.cat-image {
+    width: auto;
+    height: 8rem; /* 타이틀 화면 기본 크기 */
+    object-fit: contain;
+    transition: all 0.5s ease;
+}
+
+.cat-character.large .cat-image {
+    height: 30vh; /* 게임 화면에서는 화면 높이의 30% */
+}
+
+/* 고양이 얼굴 돌리기 효과 제거 - 이미지로 대체 */
 .cat-character.turn-left,
 #catCharacter.turn-left {
-    transform: rotate(-25deg) translateX(-20px) !important;
-    transition: all 0.6s ease !important;
-    filter: drop-shadow(5px 5px 10px rgba(255, 0, 0, 0.5)) !important;
+    /* 회전 효과 제거 */
 }
 
 .cat-character.turn-right,
 #catCharacter.turn-right {
-    transform: rotate(25deg) translateX(20px) !important;
-    transition: all 0.6s ease !important;
-    filter: drop-shadow(-5px 5px 10px rgba(0, 0, 255, 0.5)) !important;
+    /* 회전 효과 제거 */
 }
 
 /* 참참참 텍스트 효과 */

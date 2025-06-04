@@ -11,7 +11,9 @@
     <div id="titleScreen" class="screen">
         <div class="title-container">
             <h1 class="game-title">참참참 게임</h1>
-            <div class="cat-character">😸</div>
+            <div class="cat-character">
+                <img src="images/front.png" alt="고양이" class="cat-image">
+            </div>
             
             <div class="challenge-section">
                 <h2 class="challenge-title">참참참 게임에 도전하세요.</h2>
@@ -24,8 +26,8 @@
                     <p>참참참 마무리 될때,</p>
                     <p>고양이 얼굴이 <strong>오른쪽</strong>일지, <strong>왼쪽</strong>일지 맞추세요.</p>
                     <br>
-                    <p class="rule-result">같은 방향이면 <span class="win-text">플레이어가 승리</span>,</p>
-                    <p class="rule-result">다른 방향이면 <span class="lose-text">플레이어가 패배</span>.</p>
+                    <p class="rule-result">같은 방향이면 <span class="win-text">플레이어 승리!</span>,</p>
+                    <p class="rule-result">다른 방향이면 <span class="lose-text">플레이어 패배</span>.</p>
                     <br>
                     <p class="warning-text">한사람에게 단 한번의 기회뿐.</p>
                 </div>
@@ -41,7 +43,9 @@
             <div id="statusText" class="status-text">준비!</div>
             
             <div class="cat-container">
-                <div id="catCharacter" class="cat-character large">😸</div>
+                <div id="catCharacter" class="cat-character large">
+                    <img id="catImage" src="images/front.png" alt="고양이" class="cat-image">
+                </div>
             </div>
 
             <!-- 참참참 버튼 섹션 -->
@@ -82,7 +86,9 @@
     <div id="gameOverScreen" class="screen hidden">
         <div class="gameover-container">
             <h2>게임 종료</h2>
-            <div class="cat-character">😸</div>
+            <div class="cat-character">
+                <img id="gameOverCatImage" src="images/front.png" alt="고양이" class="cat-image">
+            </div>
             <div id="finalResult" class="final-result"></div>
             <div class="button-group">
                 <button id="retryBtn" class="btn primary">다시 하기</button>

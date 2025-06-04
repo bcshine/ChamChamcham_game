@@ -23,6 +23,8 @@ const titleBtn = document.getElementById('titleBtn');
 
 const statusText = document.getElementById('statusText');
 const catCharacter = document.getElementById('catCharacter');
+const catImage = document.getElementById('catImage');
+const gameOverCatImage = document.getElementById('gameOverCatImage');
 const chamSection = document.getElementById('chamSection');
 const directionSection = document.getElementById('directionSection');
 const timerBar = document.getElementById('timerBar');
@@ -34,15 +36,13 @@ const finalResult = document.getElementById('finalResult');
 const chamTextDisplay = document.getElementById('chamTextDisplay');
 const resultPopup = document.getElementById('resultPopup');
 
-// 고양이 표정들
-const catExpressions = {
-    default: '😸',      // 기본 웃는 얼굴
-    excited: '😺',      // 신나는 얼굴
-    surprised: '🙀',    // 놀란 얼굴
-    happy: '😻',        // 심장 눈 얼굴
-    sad: '😿',          // 슬픈 얼굴
-    smug: '😼',         // 능글맞은 얼굴
-    confused: '😾'      // 어리둥절한 얼굴
+// 고양이 이미지들
+const catImages = {
+    front: 'images/front.png',
+    left: 'images/left.png',
+    right: 'images/right.png',
+    sad: 'images/sad.png',
+    congratulation: 'images/congraturation.png'
 };
 
 // 사운드 효과 (간단한 Beep 사운드 구현)
@@ -118,9 +118,43 @@ function showChamText(text = '참') {
     });
 }
 
-// 고양이 표정 변경 함수
+// 고양이 이미지 변경 함수
+function setCatImage(imageType) {
+    if (catImage && catImages[imageType]) {
+        catImage.src = catImages[imageType];
+        console.log('고양이 이미지 변경:', imageType, '→', catImages[imageType]);
+    }
+}
+
+// 게임오버 화면 고양이 이미지 변경 함수
+function setGameOverCatImage(imageType) {
+    if (gameOverCatImage && catImages[imageType]) {
+        gameOverCatImage.src = catImages[imageType];
+    }
+}
+
+// 고양이 표정 변경 함수 (호환성을 위해 유지)
 function setCatExpression(expression) {
-    catCharacter.textContent = catExpressions[expression];
+    // 기존 이모지 표정을 이미지로 매핑
+    switch(expression) {
+        case 'default':
+        case 'excited':
+        case 'happy':
+            setCatImage('front');
+            break;
+        case 'surprised':
+            setCatImage('congratulation');
+            break;
+        case 'sad':
+        case 'confused':
+            setCatImage('sad');
+            break;
+        case 'smug':
+            setCatImage('front');
+            break;
+        default:
+            setCatImage('front');
+    }
 }
 
 // 화면 전환 함수
@@ -154,17 +188,14 @@ function initGame() {
     statusText.textContent = '준비!';
     setCatExpression('default');
     
-    // 고양이 스타일 완전 초기화
+    // 고양이 이미지 초기화 - 정면으로 설정
+    setCatImage('front');
+    
+    // 고양이 스타일 초기화
     catCharacter.className = 'cat-character large';
     catCharacter.classList.remove('turn-left', 'turn-right');
-    catCharacter.style.transform = 'none';
-    catCharacter.style.transition = '';
     
-    // 잠시 후 다시 확인하여 완전 초기화
-    setTimeout(() => {
-        catCharacter.style.transform = '';
-        console.log('게임 초기화 후 고양이 상태:', catCharacter.className, catCharacter.style.transform);
-    }, 100);
+    console.log('게임 초기화 후 고양이 상태: 정면 이미지');
     
     chamSection.style.display = 'block';
     timerBar.classList.add('hidden');
@@ -241,66 +272,20 @@ function startFinalInputTimer() {
     statusText.textContent = '지금 선택!';
     setCatExpression('default');
     
-    // 고양이 얼굴 돌리기! 다양한 방법으로 시도
+    // 고양이 얼굴 방향 바꾸기 - 이미지로 변경
     setTimeout(() => {
-        console.log('🐱 고양이 얼굴 돌리기 시작! 방향:', catDirection);
+        console.log('🐱 고양이 얼굴 방향 바꾸기! 방향:', catDirection);
         
-        // 방법 1: 모든 기존 클래스와 스타일 완전 제거
-        catCharacter.className = 'cat-character large';
-        catCharacter.style.cssText = '';
-        
-        // 방법 2: 강제로 리플로우 발생
-        catCharacter.offsetHeight;
-        
-        // 방법 3: 클래스와 인라인 스타일 동시 적용
         if (catDirection === 'left') {
-            console.log('⬅️ 왼쪽으로 돌리기!');
-            
-            // 클래스 추가
-            catCharacter.classList.add('turn-left');
-            
-            // 직접 스타일 적용 (다중 방법)
-            catCharacter.style.transform = 'rotate(-25deg) translateX(-20px)';
-            catCharacter.style.transition = 'all 0.6s ease';
-            catCharacter.style.filter = 'drop-shadow(5px 5px 10px rgba(255, 0, 0, 0.8))';
-            
-            // 백업 방법: CSS 변수 사용
-            catCharacter.style.setProperty('--turn-direction', '-25deg');
-            
+            console.log('⬅️ 왼쪽 이미지로 변경!');
+            setCatImage('left');
         } else {
-            console.log('➡️ 오른쪽으로 돌리기!');
-            
-            // 클래스 추가
-            catCharacter.classList.add('turn-right');
-            
-            // 직접 스타일 적용 (다중 방법)
-            catCharacter.style.transform = 'rotate(25deg) translateX(20px)';
-            catCharacter.style.transition = 'all 0.6s ease';
-            catCharacter.style.filter = 'drop-shadow(-5px 5px 10px rgba(0, 0, 255, 0.8))';
-            
-            // 백업 방법: CSS 변수 사용
-            catCharacter.style.setProperty('--turn-direction', '25deg');
+            console.log('➡️ 오른쪽 이미지로 변경!');
+            setCatImage('right');
         }
-        
-        // 방법 4: 강제로 스타일 재적용
-        setTimeout(() => {
-            if (catDirection === 'left') {
-                catCharacter.style.transform = 'rotate(-25deg) translateX(-20px)';
-            } else {
-                catCharacter.style.transform = 'rotate(25deg) translateX(20px)';
-            }
-        }, 50);
         
         // 고양이 돌아가는 효과음
         playSound('click');
-        
-        // 확인용 로그
-        setTimeout(() => {
-            console.log('🔍 현재 고양이 상태:');
-            console.log('- 클래스:', catCharacter.className);
-            console.log('- Transform:', catCharacter.style.transform);
-            console.log('- 계산된 스타일:', window.getComputedStyle(catCharacter).transform);
-        }, 100);
         
     }, 100); // 짧은 지연시간
     
@@ -405,7 +390,7 @@ function showInstantResult() {
         
         // 🎉 승리 팝업 표시
         showResultPopup(true, '플레이어 승리');
-        statusText.textContent = '플레이어 승리';
+        statusText.textContent = '축하드려요!';
         
         setCatExpression('surprised'); // 놀란 표정
         playSound('win');
@@ -415,7 +400,7 @@ function showInstantResult() {
         
         // 😅 패배 팝업 표시
         showResultPopup(false, '플레이어 패배');
-        statusText.textContent = '플레이어 패배';
+        statusText.textContent = '안타까워요';
         
         setCatExpression('smug'); // 득의양양한 표정
         playSound('lose');
@@ -470,14 +455,7 @@ function gameTimeout() {
 
 // 결과 표시
 function showResult() {
-    // 고양이 방향 표시 (아직 돌리지 않았다면)
-    if (!catCharacter.classList.contains('turn-left') && !catCharacter.classList.contains('turn-right')) {
-        if (catDirection === 'left') {
-            catCharacter.classList.add('turn-left');
-        } else {
-            catCharacter.classList.add('turn-right');
-        }
-    }
+    // 고양이 방향은 이미 이미지로 표시되었으므로 추가 처리 불필요
     
     // 결과 판정 (아직 판정되지 않았다면)
     if (gameResult === null) {
@@ -535,12 +513,15 @@ function showGameOver() {
     switch(gameResult) {
         case 'win':
             resultMessage = '플레이어 승리! 🎉';
+            setGameOverCatImage('congratulation'); // 축하 이미지
             break;
         case 'lose':
             resultMessage = '플레이어 패배! 😅';
+            setGameOverCatImage('sad'); // 슬픈 이미지
             break;
         case 'timeout':
             resultMessage = '시간 초과! ⏰';
+            setGameOverCatImage('sad'); // 슬픈 이미지
             break;
     }
     
@@ -563,7 +544,17 @@ function goToTitle() {
 }
 
 // 이벤트 리스너 등록
+console.log('DOM 요소 확인:', {
+    startBtn: startBtn,
+    chamBtn: chamBtn,
+    leftBtn: leftBtn,
+    rightBtn: rightBtn,
+    retryBtn: retryBtn,
+    titleBtn: titleBtn
+});
+
 startBtn.addEventListener('click', () => {
+    console.log('도전 버튼 클릭됨!');
     playSound('button');
     showScreen('game');
     initGame();
@@ -572,6 +563,7 @@ startBtn.addEventListener('click', () => {
 
 // 참참참 버튼 이벤트
 chamBtn.addEventListener('click', () => {
+    console.log('참참참 버튼 클릭됨!');
     if (!chamStarted) {
         playSound('button');
         startChamSequence();
@@ -579,11 +571,23 @@ chamBtn.addEventListener('click', () => {
 });
 
 // 방향 버튼 이벤트
-leftBtn.addEventListener('click', () => selectDirection('left'));
-rightBtn.addEventListener('click', () => selectDirection('right'));
+leftBtn.addEventListener('click', () => {
+    console.log('왼쪽 버튼 클릭됨!');
+    selectDirection('left');
+});
+rightBtn.addEventListener('click', () => {
+    console.log('오른쪽 버튼 클릭됨!');
+    selectDirection('right');
+});
 
-retryBtn.addEventListener('click', restartGame);
-titleBtn.addEventListener('click', goToTitle);
+retryBtn.addEventListener('click', () => {
+    console.log('다시하기 버튼 클릭됨!');
+    restartGame();
+});
+titleBtn.addEventListener('click', () => {
+    console.log('처음으로 버튼 클릭됨!');
+    goToTitle();
+});
 
 // 키보드 지원
 document.addEventListener('keydown', (e) => {
